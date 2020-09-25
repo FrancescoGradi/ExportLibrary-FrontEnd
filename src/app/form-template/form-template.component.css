@@ -1,0 +1,11 @@
+body {
+  align-content: center;
+  text-align: center;
+  align-self: center;
+}
+
+.button-class {
+  margin-top: 2rem;
+  position: absolute;
+  right: 40%;
+}

@@ -1,0 +1,23 @@
+<header>
+
+  <mat-toolbar>
+  <span class="mat-accent">
+    Template Categories
+  </span>
+  </mat-toolbar>
+
+</header>
+
+<body>
+
+<mat-grid-list cols="2" rowHeight="2:1">
+  <ng-container *ngFor="let c of categories">
+    <mat-grid-tile>
+      <button class="mat-flat-button" (click)="goToCatPage(c)">
+        {{ c }}
+      </button>
+    </mat-grid-tile>
+  </ng-container>
+</mat-grid-list>
+
+</body>

@@ -1,0 +1,45 @@
+<header>
+
+  <mat-toolbar>
+  <span class="mat-accent">
+    Template {{ category }}
+  </span>
+  </mat-toolbar>
+
+</header>
+
+<body>
+
+
+  <ng-form [formGroup]="myFormGroup">
+    <div *ngFor="let form_elem of fields">
+      <div [ngSwitch]="form_elem.type">
+        <div *ngSwitchCase="'textBox'">
+          <mat-form-field>
+            <input matInput type="text" placeholder="{{form_elem.label}}" formControlName="{{form_elem.label}}" name="{{form_elem.label}}"/>
+          </mat-form-field>
+        </div>
+        <div *ngSwitchCase="'number'">
+          <mat-form-field>
+            <input matInput type="number" placeholder="{{form_elem.label}}" formControlName="{{form_elem.label}}" name="{{form_elem.label}}"/>
+          </mat-form-field>
+        </div>
+        <div *ngSwitchCase="'date'">
+          <mat-form-field>
+            <input matInput type="date" placeholder="{{form_elem.label}}" formControlName="{{form_elem.label}}" name="{{form_elem.label}}"/>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </ng-form>
+
+  <div class="button-class">
+
+    <table cellspacing="0"><tr>
+      <td><button mat-flat-button color="warn" (click)="backHome()">Back</button></td>
+      <td><button mat-flat-button color="primary" (click)="exportToBackend()">Export</button></td>
+    </tr>
+    </table>
+  </div>
+
+</body>
