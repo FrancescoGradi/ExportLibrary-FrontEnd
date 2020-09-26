@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class FormTemplateComponent implements OnInit {
 
-  public myFormGroup: FormGroup;
+  public formGroup: FormGroup;
   public category: string;
   public fields: any;
 
@@ -24,10 +24,10 @@ export class FormTemplateComponent implements OnInit {
       { 'type': "textBox", "label": "address", "value": null}];
 
     let group={}
-    this.fields.forEach(input_template=>{
-      group[input_template.label] = new FormControl('');
-    })
-    this.myFormGroup = new FormGroup(group);
+    this.fields.forEach(field=>{
+      group[field.label] = new FormControl(null);
+    });
+    this.formGroup = new FormGroup(group);
 
   }
 
@@ -39,10 +39,11 @@ export class FormTemplateComponent implements OnInit {
   }
 
   exportToBackend(): void {
-    console.log("http.post...");
-    console.log(this.fields.firstname)
+    this.fields.forEach(field=>{
+      field.value = this.formGroup.value[field.label];
+    });
     console.log(this.fields);
-    console.log(this.myFormGroup);
+    console.log("http.post...");
   }
 
 }
