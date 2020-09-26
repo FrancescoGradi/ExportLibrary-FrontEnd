@@ -9,8 +9,6 @@
 </header>
 
 <body>
-
-
   <ng-form [formGroup]="formGroup">
     <div *ngFor="let form_elem of fields">
       <div [ngSwitch]="form_elem.type">
@@ -32,6 +30,21 @@
       </div>
     </div>
   </ng-form>
+
+  <ng-form [formGroup]="formGroup">
+    <div formArrayName="list">
+      <div class="row" *ngFor="let item of formGroup.value['list']; let i = index">
+        <mat-form-field>
+          <input matInput formControlName="{{item.itemContent}}" placeholder="{{item.itemLabel}}">
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-form>
+
+  <button class="float-left" mat-icon-button color="primary" aria-label="Add"
+          (click)="addItemFormGroup()" matTooltip="Add">
+    <mat-icon>add_circle_outline</mat-icon>
+  </button>
 
   <div class="button-class">
 
