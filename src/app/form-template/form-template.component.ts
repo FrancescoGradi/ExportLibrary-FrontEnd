@@ -28,33 +28,28 @@ export class FormTemplateComponent implements OnInit {
     this.fields.forEach(field=>{
       group[field.label] = new FormControl(null);
     });
-    group['list'] = this.formBuilder.array([this.createListFormGroup()])
+    group['list'] = this.formBuilder.array([])
     this.formGroup = new FormGroup(group);
-
-    console.log(this.formGroup);
   }
 
   ngOnInit(): void {}
 
-  private createListFormGroup(): FormGroup {
-    return new FormGroup({
-      'itemContent': new FormControl(''),
-      'itemLabel': new FormControl('List element')
-    })
-  }
-
   public addItemFormGroup() {
     const items = this.formGroup.get('list') as FormArray
-    items.push(this.createListFormGroup())
+    items.push(new FormGroup({'item': new FormControl('')}));
   }
 
   public removeOrClearList(i: number) {
     const items = this.formGroup.get('list') as FormArray
-    if (items.length > 1) {
+    if (items.length > 0) {
       items.removeAt(i)
     } else {
       items.reset()
     }
+  }
+
+  getControls() {
+    return (this.formGroup.controls['list'] as FormArray).controls;
   }
 
   backHome(): void {
@@ -65,7 +60,7 @@ export class FormTemplateComponent implements OnInit {
     this.fields.forEach(field=>{
       field.value = this.formGroup.value[field.label];
     });
-    console.log(this.formGroup);
+    this.fields.push({'type': 'list', 'label': 'list', 'value': this.formGroup.value['list']});
     console.log(this.fields);
     console.log("http.post...");
   }

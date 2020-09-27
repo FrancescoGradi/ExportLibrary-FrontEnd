@@ -9,3 +9,7 @@ body {
   position: absolute;
   right: 40%;
 }
+
+.main-button {
+  width: 5rem;
+}

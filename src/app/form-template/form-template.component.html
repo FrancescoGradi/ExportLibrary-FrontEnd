@@ -33,10 +33,15 @@
 
   <ng-form [formGroup]="formGroup">
     <div formArrayName="list">
-      <div class="row" *ngFor="let item of formGroup.value['list']; let i = index">
-        <mat-form-field>
-          <input matInput formControlName="{{item.itemContent}}" placeholder="{{item.itemLabel}}">
-        </mat-form-field>
+      <div class="row" *ngFor="let item of getControls(); let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field>
+            <textarea matInput formControlName="item" name="item" placeholder="List element"></textarea>
+          </mat-form-field>
+          <button mat-icon-button color="warn" aria-label="Remove/clear" (click)="removeOrClearList(i)" matTooltip="Remove">
+            <mat-icon>highlight_off</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </ng-form>
@@ -49,8 +54,8 @@
   <div class="button-class">
 
     <table cellspacing="0"><tr>
-      <td><button mat-flat-button color="warn" (click)="backHome()">Back</button></td>
-      <td><button mat-flat-button color="primary" (click)="exportToBackend()">Export</button></td>
+      <td><button mat-flat-button color="warn" class="main-button" (click)="backHome()">Back</button></td>
+      <td><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></td>
     </tr>
     </table>
   </div>
