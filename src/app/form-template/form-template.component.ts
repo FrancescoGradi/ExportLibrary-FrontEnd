@@ -65,4 +65,25 @@ export class FormTemplateComponent implements OnInit {
     console.log("http.post...");
   }
 
+  public imagePath;
+  public imgURL: any;
+  public message: string;
+
+  preview(files): void {
+    if (files.length === 0)
+      return;
+
+    let msgType = files[0].type;
+    if (msgType.match(/image\/*/) == null) {
+      this.message = "Only images are accepted.";
+      return;
+    }
+
+    let reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.imgURL = reader.result;
+    }
+  }
 }

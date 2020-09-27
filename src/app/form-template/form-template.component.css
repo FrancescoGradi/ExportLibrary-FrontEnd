@@ -13,3 +13,17 @@ body {
 .main-button {
   width: 5rem;
 }
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.preview-image {
+  right: 25%;
+  max-width: 50%;
+
+}
