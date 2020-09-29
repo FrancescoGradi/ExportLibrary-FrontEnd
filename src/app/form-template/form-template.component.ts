@@ -63,6 +63,7 @@ export class FormTemplateComponent implements OnInit {
     this.fields.push({'type': 'list', 'label': 'list', 'value': this.formGroup.value['list']});
     console.log(this.fields);
     console.log("http.post...");
+
   }
 
   public imagePath;

@@ -14,6 +14,7 @@ export class CategoryHomeComponent implements OnInit {
 
     console.log("http get categories...")
 
+
     this.categories = ["Curriculum", "Graphs", "Report", "Brochure"];
 
     console.log("this.http.post(this.url, jsonToExport).toPromise().then(data => {\n" +
