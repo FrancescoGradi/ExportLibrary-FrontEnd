@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +15,7 @@ export class FormTemplateComponent implements OnInit {
   public category: string;
   public fields: any;
 
-  constructor(public router: Router, private formBuilder: FormBuilder) {
+  constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
 
     console.log("http.get...");

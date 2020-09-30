@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-home',
@@ -10,9 +11,10 @@ export class CategoryHomeComponent implements OnInit {
 
   public categories: string[] = [];
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private http: HttpClient) {
 
     console.log("http get categories...")
+    console.log(this.http.get('hello', {responseType: 'text'}));
 
 
     this.categories = ["Curriculum", "Graphs", "Report", "Brochure"];
