@@ -16,7 +16,7 @@ export class CategoryHome {
   constructor(private http: HttpClient) { }
 
   getCategories(): Observable<any> {
-    return this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/exportendpoint/categories');
+    return this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/categories');
   }
 
 }
