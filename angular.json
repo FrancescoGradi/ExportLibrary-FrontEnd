@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "ExportLibrary-FrontEnd"
+  "defaultProject": "ExportLibrary-FrontEnd",
+  "cli": {
+    "analytics": "77c694c2-a697-4820-8ac7-3c45a1b957d7"
+  }
 }
