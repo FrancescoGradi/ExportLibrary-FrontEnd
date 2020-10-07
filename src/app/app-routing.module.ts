@@ -9,8 +9,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'category-home', pathMatch: 'full'},
 ];
 
+// @ts-ignore
 @NgModule({
   imports: [RouterModule.forRoot(routes,{ useHash: true })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

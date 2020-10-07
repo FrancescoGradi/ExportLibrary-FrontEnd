@@ -19,6 +19,7 @@ export class FormTemplateComponent implements OnInit {
     this.category = this.router.getCurrentNavigation().extras.state.category;
 
     console.log("http.get...");
+    http.get('localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/exportendpoint/categories');
 
     this.fields = [{ 'type': "textBox", "label": "firstname", "value": null},
       { 'type': "textBox", "label": "lastname", "value": null},
