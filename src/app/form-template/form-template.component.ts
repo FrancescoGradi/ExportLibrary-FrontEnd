@@ -13,10 +13,13 @@ export class FormTemplateComponent implements OnInit {
 
   public formGroup: FormGroup;
   public category: string;
+  public selectedTemplate: string;
+  public templates: any;
   public fields: any;
 
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
+    this.formGroup = new FormGroup({});
 
     console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category));
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
@@ -34,6 +37,12 @@ export class FormTemplateComponent implements OnInit {
 
       console.log(this.formGroup);
     });
+
+    this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/templates/'.concat(this.category)).toPromise().then(data => {
+      this.templates = data;
+      console.log(this.templates);
+    })
+
   }
 
   ngOnInit(): void { }
@@ -66,6 +75,10 @@ export class FormTemplateComponent implements OnInit {
     });
     this.fields.push({type: 'list', label: 'list', value: this.formGroup.value['list']});
     console.log(this.fields);
+
+    let result = {metadata: this.selectedTemplate, data: this.fields, image: this.imgURL};
+
+    console.log(result);
     console.log("http.post...");
 
   }
