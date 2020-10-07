@@ -14,7 +14,7 @@
       <ng-form [formGroup]="formGroup">
         <div *ngFor="let form_elem of fields">
           <div [ngSwitch]="form_elem.type">
-            <div *ngSwitchCase="'textBox'">
+            <div *ngSwitchCase="'text'">
               <mat-form-field>
                 <input matInput type="text" placeholder="{{form_elem.label}}" formControlName="{{form_elem.label}}" name="{{form_elem.label}}"/>
               </mat-form-field>

@@ -12,8 +12,7 @@ export class CategoryHomeComponent implements OnInit {
 
   public categories: any;
 
-  constructor(public router: Router, private http: HttpClient) {
-  }
+  constructor(public router: Router, private http: HttpClient) { }
 
   getCategories(): void {
     this.http.get("http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/categories").toPromise().then(data => {

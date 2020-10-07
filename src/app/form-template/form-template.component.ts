@@ -18,23 +18,25 @@ export class FormTemplateComponent implements OnInit {
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
 
-    console.log("http.get...");
-    http.get('localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/exportendpoint/categories');
+    console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category));
+    this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
+      this.fields = data;
 
-    this.fields = [{ 'type': "textBox", "label": "firstname", "value": null},
-      { 'type': "textBox", "label": "lastname", "value": null},
-      { 'type': "date", "label": "dateofBirth", "value": null},
-      { 'type': "textBox", "label": "address", "value": null}];
+      console.log(this.fields);
 
-    let group={}
-    this.fields.forEach(field=>{
-      group[field.label] = new FormControl(null);
+      let group={}
+      this.fields.forEach(field=>{
+        console.log(field.label);
+        group[field.label] = new FormControl();
+      });
+      group['list'] = this.formBuilder.array([])
+      this.formGroup = new FormGroup(group);
+
+      console.log(this.formGroup);
     });
-    group['list'] = this.formBuilder.array([])
-    this.formGroup = new FormGroup(group);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public addItemFormGroup() {
     const items = this.formGroup.get('list') as FormArray
@@ -62,7 +64,7 @@ export class FormTemplateComponent implements OnInit {
     this.fields.forEach(field=>{
       field.value = this.formGroup.value[field.label];
     });
-    this.fields.push({'type': 'list', 'label': 'list', 'value': this.formGroup.value['list']});
+    this.fields.push({type: 'list', label: 'list', value: this.formGroup.value['list']});
     console.log(this.fields);
     console.log("http.post...");
 
