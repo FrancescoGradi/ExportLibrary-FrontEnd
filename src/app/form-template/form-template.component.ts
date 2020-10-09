@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
 @Component({
   selector: 'app-form-template',
@@ -16,6 +17,7 @@ export class FormTemplateComponent implements OnInit {
   public selectedTemplate: string;
   public templates: any;
   public fields: any;
+  public doc: any;
 
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
@@ -82,7 +84,14 @@ export class FormTemplateComponent implements OnInit {
     let result = {metadata: this.selectedTemplate, data: this.fields};
 
     console.log(result);
-    console.log("http.post...");
+    this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/', result,
+      {headers: {'Access-Control-Allow-Origin': '*',
+                         'Access-Control-Allow-Methods': 'GET, POST, PUT, UPDATE, OPTIONS',
+                         'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'}}).toPromise()
+      .then(data => {
+        this.doc = data;
+      });
+    console.log('http.post...');
 
   }
 
