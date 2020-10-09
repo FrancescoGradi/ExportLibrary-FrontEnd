@@ -30,9 +30,11 @@ export class FormTemplateComponent implements OnInit {
       let group={}
       this.fields.forEach(field=>{
         console.log(field.label);
-        group[field.label] = new FormControl();
+        if (field.label == 'list')
+          group[field.label] = this.formBuilder.array([])
+        else
+          group[field.label] = new FormControl();
       });
-      group['list'] = this.formBuilder.array([])
       this.formGroup = new FormGroup(group);
 
       console.log(this.formGroup);
