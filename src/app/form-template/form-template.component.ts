@@ -74,11 +74,12 @@ export class FormTemplateComponent implements OnInit {
   exportToBackend(): void {
     this.fields.forEach(field=>{
       field.value = this.formGroup.value[field.label];
+      if (field.label == "image") {
+        field.value = this.imgURL;
+      }
     });
-    this.fields.push({type: 'list', label: 'list', value: this.formGroup.value['list']});
-    console.log(this.fields);
 
-    let result = {metadata: this.selectedTemplate, data: this.fields, image: this.imgURL};
+    let result = {metadata: this.selectedTemplate, data: this.fields};
 
     console.log(result);
     this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/', result,
