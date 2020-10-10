@@ -90,7 +90,7 @@ export class FormTemplateComponent implements OnInit {
         'Access-Control-Allow-Methods': 'GET, POST, PUT, UPDATE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'
       })
-    }
+    };
     this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/', result,
       httpOptions).toPromise()
       .then(data => {
