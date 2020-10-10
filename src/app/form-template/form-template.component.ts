@@ -59,9 +59,9 @@ export class FormTemplateComponent implements OnInit {
   public removeOrClearList(i: number) {
     const items = this.formGroup.get('list') as FormArray
     if (items.length > 0) {
-      items.removeAt(i)
+      items.removeAt(i);
     } else {
-      items.reset()
+      items.reset();
     }
   }
 
@@ -84,10 +84,15 @@ export class FormTemplateComponent implements OnInit {
     let result = {metadata: this.selectedTemplate, data: this.fields};
 
     console.log(result);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, UPDATE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'
+      })
+    }
     this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/', result,
-      {headers: {'Access-Control-Allow-Origin': '*',
-                         'Access-Control-Allow-Methods': 'GET, POST, PUT, UPDATE, OPTIONS',
-                         'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'}}).toPromise()
+      httpOptions).toPromise()
       .then(data => {
         this.doc = data;
       });
