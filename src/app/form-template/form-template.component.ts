@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
-import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
+import { JsonObject } from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
 @Component({
   selector: 'app-form-template',
@@ -23,7 +23,6 @@ export class FormTemplateComponent implements OnInit {
     this.category = this.router.getCurrentNavigation().extras.state.category;
     this.formGroup = new FormGroup({});
 
-    console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category));
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
       this.fields = data;
 
@@ -91,8 +90,11 @@ export class FormTemplateComponent implements OnInit {
         'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'
       })
     };
-    this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/', result,
-      httpOptions).toPromise()
+
+    console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category).concat('/export'));
+
+    this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category).concat('/export'),
+      result, httpOptions).toPromise()
       .then(data => {
         this.doc = data;
       });

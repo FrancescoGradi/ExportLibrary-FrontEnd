@@ -25,7 +25,13 @@ export class CategoryHomeComponent implements OnInit {
   }
 
   goToCatPage(category): void {
-    this.router.navigate(['form-template'], {state: {category}}).then();
+    // TO-DO trovare una soluzione migliore per distinguere i due diversi tipi di form, per docx e xlsx.
+    if (category == 'Salari Ospedale') {
+      this.router.navigate(['table-template'], {state: {category}}).then();
+    } else {
+      this.router.navigate(['form-template'], {state: {category}}).then();
+
+    }
   }
 
 }
