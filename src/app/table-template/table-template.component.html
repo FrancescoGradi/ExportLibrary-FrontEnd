@@ -1,1 +1,58 @@
-<p>table-template works!</p>
+<header>
+
+  <mat-toolbar>
+  <span class="mat-accent">
+    Template {{ category }}
+  </span>
+  </mat-toolbar>
+
+</header>
+
+<body>
+  <form class="basic-container" [formGroup]="tableForm">
+    <div formArrayName="rows">
+      <div class="row" *ngFor="let row of getControls(); let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field *ngFor="let field of fields;">
+            <div [ngSwitch]="field.type">
+              <div *ngSwitchCase="'text'">
+                <input matInput type="text" placeholder="{{field.label}}" formControlName="{{field.label}}" name="{{field.label}}"/>
+              </div>
+              <div *ngSwitchCase="'number'">
+                <input matInput type="number" placeholder="{{field.label}}" formControlName="{{field.label}}" name="{{field.label}}"/>
+              </div>
+            </div>
+          </mat-form-field>
+          <button mat-icon-button color="warn" aria-label="Remove/clear" (click)="removeRow(i)" matTooltip="Remove">
+            <mat-icon>highlight_off</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <button class="float-left" mat-icon-button color="primary" aria-label="Add" (click)="addRowFormGroup()">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Select template</mat-label>
+    <mat-select [(ngModel)]="selectedTemplate" name="templates">
+      <mat-option *ngFor="let template of templates" [value]="template">
+        {{ template }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="button-class">
+    <table cellspacing="0"><tr>
+      <td><button mat-flat-button color="warn" class="main-button" (click)="backHome()">Back</button></td>
+      <td><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></td>
+    </tr>
+    </table>
+  </div>
+
+</body>
+

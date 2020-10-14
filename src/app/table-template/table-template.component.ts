@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class TableTemplateComponent implements OnInit {
 
   public formGroup: FormGroup;
+  public tableForm: any;
   public category: string;
   public selectedTemplate: string;
   public templates: any;
@@ -19,33 +20,56 @@ export class TableTemplateComponent implements OnInit {
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
     this.formGroup = new FormGroup({});
-    console.log(this.category);
 
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
+
       this.fields = data;
 
-      console.log(this.fields);
-
-      let group={}
-      this.fields.forEach(field=>{
-        console.log(field.label);
-        if (field.label == 'list')
-          group[field.label] = this.formBuilder.array([])
-        else
-          group[field.label] = new FormControl();
+      this.tableForm = this.formBuilder.group({
+        rows: this.formBuilder.array([this.createRowFormGroup()])
       });
-      this.formGroup = new FormGroup(group);
-
-      console.log(this.formGroup);
     });
 
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/templates/'.concat(this.category)).toPromise().then(data => {
       this.templates = data;
-      console.log(this.templates);
     })
   }
 
   ngOnInit(): void {
+  }
+
+  private createRowFormGroup(): FormGroup {
+    let group={}
+    this.fields.forEach(field=>{
+      group[field.label] = new FormControl();
+    });
+    return new FormGroup(group);
+  }
+
+  public addRowFormGroup() {
+    const rows = this.tableForm.get('rows') as FormArray
+    rows.push(this.createRowFormGroup());
+  }
+
+  public removeRow(i: number) {
+    const rows = this.tableForm.get('rows') as FormArray
+    if (rows.length > 0) {
+      rows.removeAt(i);
+    } else {
+      rows.reset();
+    }
+  }
+
+  public getControls() {
+    return (this.tableForm.controls['rows'] as FormArray).controls;
+  }
+
+  public exportToBackend(): void {
+    console.log(this.tableForm);
+  }
+
+  public backHome(): void {
+    this.router.navigate(['category-home']).then();
   }
 
 }
