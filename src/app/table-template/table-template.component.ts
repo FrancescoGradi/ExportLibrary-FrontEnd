@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
 @Component({
   selector: 'app-table-template',
@@ -66,6 +67,24 @@ export class TableTemplateComponent implements OnInit {
 
   public exportToBackend(): void {
     console.log(this.tableForm);
+
+    let result = {metadata: this.selectedTemplate, data: this.tableForm.value.rows};
+
+    console.log(result);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, UPDATE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'
+      })
+    };
+
+    console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category).concat('/export'));
+
+    this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category).concat('/export'),
+      result, httpOptions).toPromise().then();
+    console.log('http.post...');
+
   }
 
   public backHome(): void {
