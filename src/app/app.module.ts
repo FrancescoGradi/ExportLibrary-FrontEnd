@@ -16,13 +16,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import { TableTemplateComponent } from './table-template/table-template.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoryHomeComponent,
-    FormTemplateComponent
+    FormTemplateComponent,
+    TableTemplateComponent
   ],
   imports: [
     BrowserModule,

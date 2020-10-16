@@ -3,7 +3,6 @@ import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-form-template',
@@ -29,11 +28,8 @@ export class FormTemplateComponent implements OnInit {
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
       this.fields = data;
 
-      console.log(this.fields);
-
       let group={}
       this.fields.forEach(field=>{
-        console.log(field.label);
         if (field.label == 'list')
           group[field.label] = this.formBuilder.array([])
         else
@@ -41,12 +37,10 @@ export class FormTemplateComponent implements OnInit {
       });
       this.formGroup = new FormGroup(group);
 
-      console.log(this.formGroup);
     });
 
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/templates/'.concat(this.category)).toPromise().then(data => {
       this.templates = data;
-      console.log(this.templates);
     })
 
   }
@@ -72,37 +66,7 @@ export class FormTemplateComponent implements OnInit {
   }
 
   backHome(): void {
-    this.router.navigate(['category-home']);
-  }
-
-  public getDoc(): Observable<Blob> {
-    let uri = 'file:///Users/federico/IdeaProjects/ExportLibrary-BackEnd/';
-    return this.http.get(uri, { responseType: 'blob' });
-  }
-
-  public downloadDoc(): void {
-    this.getDoc()
-      .subscribe(x => {
-        let newBlob = new Blob([x], { type: 'application/ms-word' });
-
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveOrOpenBlob(newBlob);
-          return;
-        }
-
-        const data = window.URL.createObjectURL(newBlob);
-
-        let link = document.createElement('a');
-        link.href = data;
-        link.download = this.selectedTemplate;
-        link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-
-        // tslint:disable-next-line:only-arrow-functions typedef
-        setTimeout(function() {
-          window.URL.revokeObjectURL(data);
-          link.remove();
-        }, 100);
-      });
+    this.router.navigate(['category-home']).then();
   }
 
   exportToBackend(): void {
@@ -129,8 +93,6 @@ export class FormTemplateComponent implements OnInit {
         this.doc = data.get('response');
     });
     console.log('http.post...');
-    console.log(this.doc);
-    console.log(typeof(this.doc));
 
   }
 
