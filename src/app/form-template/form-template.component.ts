@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-form-template',
@@ -22,6 +23,7 @@ export class FormTemplateComponent implements OnInit {
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
     this.formGroup = new FormGroup({});
+    this.doc = new Uint8Array();
 
     console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category));
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
@@ -73,10 +75,40 @@ export class FormTemplateComponent implements OnInit {
     this.router.navigate(['category-home']);
   }
 
+  public getDoc(): Observable<Blob> {
+    let uri = 'file:///Users/federico/IdeaProjects/ExportLibrary-BackEnd/';
+    return this.http.get(uri, { responseType: 'blob' });
+  }
+
+  public downloadDoc(): void {
+    this.getDoc()
+      .subscribe(x => {
+        let newBlob = new Blob([x], { type: 'application/ms-word' });
+
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+        }
+
+        const data = window.URL.createObjectURL(newBlob);
+
+        let link = document.createElement('a');
+        link.href = data;
+        link.download = this.selectedTemplate;
+        link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+        // tslint:disable-next-line:only-arrow-functions typedef
+        setTimeout(function() {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+        }, 100);
+      });
+  }
+
   exportToBackend(): void {
     this.fields.forEach(field=>{
       field.value = this.formGroup.value[field.label];
-      if (field.label == "image") {
+      if (field.label == 'image') {
         field.value = this.imgURL;
       }
     });
@@ -91,12 +123,14 @@ export class FormTemplateComponent implements OnInit {
         'Access-Control-Allow-Headers': 'Content-Type, Accept, X-Requested-With'
       })
     };
-    this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/', result,
-      httpOptions).toPromise()
-      .then(data => {
-        this.doc = data;
-      });
+    this.http.post<any>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'
+      .concat(this.category).concat('/export'), result,
+      httpOptions).toPromise().then(data => {
+        this.doc = data.get('response');
+    });
     console.log('http.post...');
+    console.log(this.doc);
+    console.log(typeof(this.doc));
 
   }
 
