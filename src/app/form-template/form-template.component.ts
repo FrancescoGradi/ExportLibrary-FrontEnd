@@ -18,11 +18,13 @@ export class FormTemplateComponent implements OnInit {
   public templates: any;
   public fields: any;
   public doc: any;
+  public toBeZipped: boolean;
 
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
     this.formGroup = new FormGroup({});
     this.doc = new Uint8Array();
+    this.toBeZipped = false;
 
     console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category));
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category)).toPromise().then(data => {
@@ -77,7 +79,7 @@ export class FormTemplateComponent implements OnInit {
       }
     });
 
-    let result = {metadata: this.selectedTemplate, data: this.fields};
+    let result = {metadata: this.selectedTemplate, data: this.fields, zip: this.toBeZipped};
 
     console.log(result);
     const httpOptions = {
@@ -115,6 +117,10 @@ export class FormTemplateComponent implements OnInit {
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
       this.imgURL = reader.result;
-    }
+    };
+  }
+
+  zipFile(): void {
+    this.toBeZipped = !this.toBeZipped;
   }
 }

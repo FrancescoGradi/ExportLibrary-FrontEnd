@@ -8,7 +8,7 @@ import { CategoryHomeComponent } from './category-home/category-home.component';
 import { FormTemplateComponent } from './form-template/form-template.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatOptionModule } from '@angular/material/core';
+import {MatOptionModule, MatPseudoCheckboxModule} from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,22 +26,23 @@ import { TableTemplateComponent } from './table-template/table-template.componen
     FormTemplateComponent,
     TableTemplateComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatOptionModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    HttpClientModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatGridListModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatInputModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        HttpClientModule,
+        MatPseudoCheckboxModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
