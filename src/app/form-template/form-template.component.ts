@@ -4,6 +4,9 @@ import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http'
 import { Router } from '@angular/router';
 import { JsonObject } from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
+import 'rxjs/Rx' ;
+import {stringify} from 'querystring';
+
 @Component({
   selector: 'app-form-template',
   templateUrl: './form-template.component.html',
@@ -77,7 +80,6 @@ export class FormTemplateComponent implements OnInit {
 
     let result = {metadata: this.selectedTemplate, data: this.fields};
 
-    console.log(result);
     const httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*',
@@ -86,15 +88,44 @@ export class FormTemplateComponent implements OnInit {
       })
     };
 
-    console.log('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category).concat('/export'));
-
     this.http.post<JsonObject>('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/form/'.concat(this.category).concat('/export'),
       result, httpOptions).toPromise()
       .then(data => {
-        this.doc = data;
+        this.doc = data.response;
+        this.downloadFile();
       });
-    console.log('http.post...');
 
+  }
+
+  public downloadFile() {
+    const blob = this.b64toBlob(this.doc, 'application/octet-stream');
+    const url = window.URL.createObjectURL(blob);
+    var anchor = document.createElement("a");
+    anchor.download = this.selectedTemplate;
+    anchor.href = url;
+    anchor.click();
+  }
+
+  public b64toBlob(b64Data, contentType, sliceSize=512) {
+
+    const byteCharacters = atob(b64Data);
+    let byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      let byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      let byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
   }
 
   public imagePath;
