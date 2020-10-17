@@ -82,7 +82,6 @@ export class TableTemplateComponent implements OnInit {
       result, httpOptions).toPromise()
       .then(data => {
         this.doc = data.response;
-        console.log(this.doc);
         this.downloadFile();
       });
 
@@ -98,7 +97,6 @@ export class TableTemplateComponent implements OnInit {
   }
 
   public b64toBlob(b64Data, contentType, sliceSize=512) {
-
     const byteCharacters = atob(b64Data);
     let byteArrays = [];
 
