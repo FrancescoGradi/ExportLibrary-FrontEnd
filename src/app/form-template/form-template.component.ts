@@ -3,7 +3,9 @@ import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JsonObject } from '@angular/compiler-cli/ngcc/src/packages/entry_point';
+import { DownloaderService } from '../downloader/downloader.service';
 
+// tslint:disable-next-line:import-blacklist
 import 'rxjs/Rx' ;
 import {stringify} from 'querystring';
 
@@ -23,7 +25,8 @@ export class FormTemplateComponent implements OnInit {
   public doc: any;
   public toBeZipped: boolean;
 
-  constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient) {
+  constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient,
+              public downloaderService: DownloaderService) {
     this.category = this.router.getCurrentNavigation().extras.state.category;
     this.formGroup = new FormGroup({});
     this.doc = new Uint8Array();
@@ -95,40 +98,9 @@ export class FormTemplateComponent implements OnInit {
       result, httpOptions).toPromise()
       .then(data => {
         this.doc = data.response;
-        this.downloadFile();
+        this.downloaderService.downloadFile(this.doc, this.selectedTemplate, this.toBeZipped);
       });
 
-  }
-
-  public downloadFile() {
-    const blob = this.b64toBlob(this.doc, 'application/octet-stream');
-    const url = window.URL.createObjectURL(blob);
-    var anchor = document.createElement("a");
-    anchor.download = this.selectedTemplate;
-    anchor.href = url;
-    anchor.click();
-  }
-
-  public b64toBlob(b64Data, contentType, sliceSize=512) {
-
-    const byteCharacters = atob(b64Data);
-    let byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      let slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      let byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      let byteArray = new Uint8Array(byteNumbers);
-
-      byteArrays.push(byteArray);
-    }
-
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
   }
 
   public imagePath;
