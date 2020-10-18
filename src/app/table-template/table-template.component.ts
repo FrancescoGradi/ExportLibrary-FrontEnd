@@ -72,7 +72,7 @@ export class TableTemplateComponent implements OnInit {
 
   public exportToBackend(): void {
 
-    let result = {metadata: this.selectedTemplate, data: this.tableForm.value.rows};
+    let result = {metadata: this.selectedTemplate, data: this.tableForm.value.rows, zip: this.toBeZipped};
 
     const httpOptions = {
       headers: new HttpHeaders({
