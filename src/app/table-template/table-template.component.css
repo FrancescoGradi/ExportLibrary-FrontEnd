@@ -17,3 +17,8 @@ body {
 .main-button {
   width: 5rem;
 }
+
+.main-button-back {
+  width: 5rem;
+  background: lightgrey;
+}

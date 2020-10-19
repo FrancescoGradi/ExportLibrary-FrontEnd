@@ -1,9 +1,9 @@
 <header>
 
-  <mat-toolbar>
-  <span class="mat-accent">
-    Template {{ category }}
-  </span>
+  <mat-toolbar class="mat-primary">
+    <span>
+      Template {{ category }}
+    </span>
   </mat-toolbar>
 
 </header>
@@ -23,7 +23,7 @@
               </div>
             </div>
           </mat-form-field>
-          <button mat-icon-button color="warn" aria-label="Remove/clear" (click)="removeRow(i)" matTooltip="Remove">
+          <button mat-icon-button color="accent" aria-label="Remove/clear" (click)="removeRow(i)" matTooltip="Remove">
             <mat-icon>highlight_off</mat-icon>
           </button>
         </div>
@@ -47,14 +47,12 @@
   </mat-form-field>
 
   <div>
-    <label>
-      <input type="checkbox" (change)="zipFile()">zip file?
-    </label>
+    <mat-checkbox type="checkbox" (change)="zipFile()">zip file?</mat-checkbox>
   </div>
 
   <div class="button-class">
     <table cellspacing="0"><tr>
-      <td><button mat-flat-button color="warn" class="main-button" (click)="backHome()">Back</button></td>
+      <td><button mat-flat-button class="main-button-back" (click)="backHome()">Back</button></td>
       <td><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></td>
     </tr>
     </table>

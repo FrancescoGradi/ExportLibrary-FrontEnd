@@ -17,6 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { TableTemplateComponent } from './table-template/table-template.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 
 @NgModule({
@@ -42,6 +44,7 @@ import { TableTemplateComponent } from './table-template/table-template.componen
         MatIconModule,
         HttpClientModule,
         MatPseudoCheckboxModule,
+        MatCheckboxModule,
     ],
   providers: [],
   bootstrap: [AppComponent]
