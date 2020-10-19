@@ -4,18 +4,12 @@ body {
   align-self: center;
 }
 
-.button-class {
-  margin-top: 2rem;
-  position: absolute;
-  right: 40%;
-}
-
 .main-button {
-  width: 5rem;
+  width: 10rem;
 }
 
 .main-button-back {
-  width: 5rem;
+  width: 10rem;
   background: lightgrey;
 }
 
@@ -34,7 +28,9 @@ body {
 }
 
 .list-item {
+  margin-left: 2.5rem;
 }
 
 .form-item {
 }
+

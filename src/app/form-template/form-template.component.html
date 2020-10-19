@@ -34,18 +34,15 @@
         <div formArrayName="list" *ngIf="(this.formGroup.value).hasOwnProperty('list')">
           <div *ngFor="let item of getControls(); let i = index">
             <div [formGroupName]="i" class="list-item">
-              <table cellspacing="0"><tr>
-                <td>
+
                   <mat-form-field>
                     <textarea matInput formControlName="item" name="item" placeholder="List element"></textarea>
                   </mat-form-field>
-                </td>
-                <td>
+
                   <button mat-icon-button color="accent" aria-label="Remove/clear" (click)="removeOrClearList(i)" matTooltip="Remove">
                     <mat-icon>highlight_off</mat-icon>
                   </button>
-                </td>
-              </tr> </table>
+
             </div>
           </div>
           <button class="float-left" mat-icon-button color="primary" aria-label="Add"
@@ -79,12 +76,9 @@
     </div>
   </div>
 
-  <div class="button-class">
-    <table cellspacing="0"><tr>
-      <td><button mat-flat-button class="main-button-back" (click)="backHome()">Back</button></td>
-      <td><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></td>
-    </tr>
-    </table>
+  <div class="row">
+      <div class="column"><button mat-flat-button class="main-button-back" (click)="backHome()">Back</button></div>
+      <div class="column"><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></div>
   </div>
 
 </body>
