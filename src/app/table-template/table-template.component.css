@@ -15,10 +15,25 @@ body {
 }
 
 .main-button {
-  width: 5rem;
+  width: 10rem;
 }
 
 .main-button-back {
-  width: 5rem;
+  margin-top: 1rem;
+  width: 10rem;
   background: lightgrey;
 }
+
+.row {
+  display: flex;
+}
+
+.column {
+  margin: auto;
+  width: 50%;
+}
+
+.selected-templates {
+  margin-top: 1rem;
+}
+

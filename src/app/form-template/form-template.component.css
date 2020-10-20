@@ -5,10 +5,12 @@ body {
 }
 
 .main-button {
+  margin-top: 1rem;
   width: 10rem;
 }
 
 .main-button-back {
+  margin-top: 1rem;
   width: 10rem;
   background: lightgrey;
 }
@@ -31,6 +33,7 @@ body {
   margin-left: 2.5rem;
 }
 
-.form-item {
+.image {
+  margin-top: 1rem;
 }
 

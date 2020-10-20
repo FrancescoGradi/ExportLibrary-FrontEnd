@@ -11,7 +11,7 @@
 <body>
   <form class="basic-container" [formGroup]="tableForm">
     <div formArrayName="rows">
-      <div class="row" *ngFor="let row of getControls(); let i = index">
+      <div *ngFor="let row of getControls(); let i = index">
         <div [formGroupName]="i">
           <mat-form-field *ngFor="let field of fields;">
             <div [ngSwitch]="field.type">
@@ -37,25 +37,24 @@
     </div>
   </form>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Select template</mat-label>
-    <mat-select [(ngModel)]="selectedTemplate" name="templates">
-      <mat-option *ngFor="let template of templates" [value]="template">
-        {{ template }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="selected-templates">
+    <mat-form-field appearance="fill">
+      <mat-label>Select template</mat-label>
+      <mat-select [(ngModel)]="selectedTemplate" name="templates">
+        <mat-option *ngFor="let template of templates" [value]="template">
+          {{ template }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div>
     <mat-checkbox type="checkbox" (change)="zipFile()">zip file?</mat-checkbox>
   </div>
 
-  <div class="button-class">
-    <table cellspacing="0"><tr>
-      <td><button mat-flat-button class="main-button-back" (click)="backHome()">Back</button></td>
-      <td><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></td>
-    </tr>
-    </table>
+  <div class="row">
+    <div class="column"><button mat-flat-button class="main-button-back" (click)="backHome()">Back</button></div>
+    <div class="column"><button mat-flat-button color="primary" class="main-button" (click)="exportToBackend()">Export</button></div>
   </div>
 
 </body>
