@@ -27,6 +27,7 @@ body {
 .preview-image {
   right: 25%;
   max-width: 50%;
+  max-height: 25rem;
 }
 
 .list-item {

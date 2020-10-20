@@ -15,11 +15,14 @@ body {
 }
 
 .main-button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   width: 10rem;
 }
 
 .main-button-back {
   margin-top: 1rem;
+  margin-bottom: 1rem;
   width: 10rem;
   background: lightgrey;
 }
