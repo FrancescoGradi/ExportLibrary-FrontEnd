@@ -12,7 +12,7 @@
   <form class="basic-container" [formGroup]="tableForm">
     <div formArrayName="rows">
       <div *ngFor="let row of getControls(); let i = index">
-        <div [formGroupName]="i">
+        <div [formGroupName]="i" class="form-item">
           <mat-form-field *ngFor="let field of fields;">
             <div [ngSwitch]="field.type">
               <div *ngSwitchCase="'text'">

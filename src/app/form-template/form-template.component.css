@@ -4,6 +4,10 @@ body {
   align-self: center;
 }
 
+.mat-form-field {
+  width: 30%;
+}
+
 .main-button {
   margin-top: 1rem;
   width: 10rem;
@@ -31,7 +35,11 @@ body {
 }
 
 .list-item {
-  margin-left: 2.5rem;
+  margin-left: 2.2rem;
+}
+
+.form-item {
+  margin-top: 1rem;
 }
 
 .image {
