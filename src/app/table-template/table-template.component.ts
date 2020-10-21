@@ -95,7 +95,7 @@ export class TableTemplateComponent implements OnInit {
     this.router.navigate(['category-home']).then();
   }
 
-  zipFile(): void {
+  public zipFile(): void {
     this.toBeZipped = !this.toBeZipped;
   }
 

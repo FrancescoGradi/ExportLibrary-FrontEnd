@@ -14,24 +14,29 @@ export class CategoryHomeComponent implements OnInit {
 
   constructor(public router: Router, private http: HttpClient) { }
 
-  getCategories(): void {
+  public getCategories(): void {
     this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/categories').toPromise().then(data => {
       this.categories = data;
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getCategories();
   }
 
-  goToCatPage(category): void {
-    // TO-DO trovare una soluzione migliore per distinguere i due diversi tipi di form, per docx e xlsx.
-    if (category == 'Salari Ospedale') {
-      this.router.navigate(['table-template'], {state: {category}}).then();
-    } else {
-      this.router.navigate(['form-template'], {state: {category}}).then();
+  public goToCatPage(category): void {
 
-    }
+    this.http.get('http://localhost:8080/ExportLibrary-BackEnd-1.0-SNAPSHOT/templates/'.concat(category)).toPromise().then(data => {
+      const extension = data[0].substr(data[0].length - 4);
+      if (extension == "docx") {
+        this.router.navigate(['form-template'], {state: {category}}).then();
+      } else if (extension == "xlsx") {
+        this.router.navigate(['table-template'], {state: {category}}).then();
+      } else {
+        throw new Error("File extension not accepted.");
+      }
+    });
+
   }
 
 }

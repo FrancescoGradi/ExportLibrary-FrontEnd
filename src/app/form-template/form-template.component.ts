@@ -24,6 +24,9 @@ export class FormTemplateComponent implements OnInit {
   public fields: any;
   public doc: any;
   public toBeZipped: boolean;
+  public imagePath;
+  public imgURL: any;
+  public message: string;
 
   constructor(public router: Router, private formBuilder: FormBuilder, public http: HttpClient,
               public downloaderService: DownloaderService) {
@@ -68,15 +71,15 @@ export class FormTemplateComponent implements OnInit {
     }
   }
 
-  getControls() {
+  public getControls() {
     return (this.formGroup.controls['list'] as FormArray).controls;
   }
 
-  backHome(): void {
+  public backHome(): void {
     this.router.navigate(['category-home']).then();
   }
 
-  exportToBackend(): void {
+  public exportToBackend(): void {
     this.fields.forEach(field=>{
       field.value = this.formGroup.value[field.label];
       if (field.label == 'image') {
@@ -103,10 +106,6 @@ export class FormTemplateComponent implements OnInit {
 
   }
 
-  public imagePath;
-  public imgURL: any;
-  public message: string;
-
   preview(files): void {
     if (files.length === 0)
       return;
@@ -128,4 +127,5 @@ export class FormTemplateComponent implements OnInit {
   zipFile(): void {
     this.toBeZipped = !this.toBeZipped;
   }
+
 }
