@@ -13,7 +13,7 @@
     <div formArrayName="rows">
       <div *ngFor="let row of getControls(); let i = index">
         <div [formGroupName]="i" class="form-item">
-          <mat-form-field *ngFor="let field of fields;">
+          <mat-form-field *ngFor="let field of fieldsControl;">
             <div [ngSwitch]="field.type">
               <div *ngSwitchCase="'text'">
                 <input matInput type="text" placeholder="{{field.label}}" formControlName="{{field.label}}" name="{{field.label}}"/>
@@ -23,13 +23,13 @@
               </div>
             </div>
           </mat-form-field>
-          <button mat-icon-button color="accent" aria-label="Remove/clear" (click)="removeRow(i)" matTooltip="Remove">
+          <button *ngIf="!(this.isStatic)" mat-icon-button color="accent" aria-label="Remove/clear" (click)="removeRow(i)" matTooltip="Remove">
             <mat-icon>highlight_off</mat-icon>
           </button>
         </div>
       </div>
 
-      <div class="col-3">
+      <div class="col-3" *ngIf="!(this.isStatic)">
         <button class="float-left" mat-icon-button color="primary" aria-label="Add" (click)="addRowFormGroup()">
           <mat-icon>add_circle_outline</mat-icon>
         </button>

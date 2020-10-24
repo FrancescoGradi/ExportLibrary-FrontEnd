@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
-import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JsonObject } from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 import { DownloaderService } from '../downloader/downloader.service';
